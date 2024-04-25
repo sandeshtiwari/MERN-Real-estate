@@ -1,7 +1,7 @@
-import React from 'react';
-import { FaSearch } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { FaSearch } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
@@ -42,7 +42,7 @@ export default function Header() {
               />
             ) : (
               <li className="text-slate-700 hover:underline">Sign in</li>
-            )}{' '}
+            )}{" "}
           </Link>
         </ul>
       </div>
