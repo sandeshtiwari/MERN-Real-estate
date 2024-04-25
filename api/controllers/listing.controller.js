@@ -27,3 +27,32 @@ export const deleteListing = async (req, res, next) => {
     next(error);
   }
 };
+
+import mongoose from "mongoose";
+
+export const updateListing = async (req, res, next) => {
+  const { id } = req.params;
+
+  // Validate ID format
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return next(errorHandler(400, "Invalid ID format"));
+  }
+
+  try {
+    const listing = await Listing.findById(id);
+    if (!listing) {
+      return next(errorHandler(404, "Listing not found!"));
+    }
+
+    if (req.user.id !== listing.userRef) {
+      return next(errorHandler(401, "You can only update your own listings!"));
+    }
+
+    const updatedListing = await Listing.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    res.status(200).json(updatedListing);
+  } catch (error) {
+    next(error);
+  }
+};
